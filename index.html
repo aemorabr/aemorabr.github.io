@@ -148,7 +148,8 @@ kubectl port-forward -n monitoring deploy/prometheus-server 9090
         <h3>Creating IAM Role for EBS-CSI Controller</h3>
         <pre>
             <p> Create a new file with the name ebs-csi-policy.json with the following content:</p>
-<pre>
+
+        <pre>
     {
     "Version": "2012-10-17",
     "Statement": [
@@ -183,7 +184,7 @@ kubectl port-forward -n monitoring deploy/prometheus-server 9090
     }
     ]
     }
-        </pre>
+            </pre>
         # Create an IAM policy for the EBS-CSI driver
         aws iam create-policy \
         --policy-name AmazonEKS_EBS_CSI_Driver_Policy \
