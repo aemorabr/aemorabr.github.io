@@ -182,30 +182,6 @@ kubectl port-forward -n monitoring deploy/prometheus-server 9090
     }
     ]
     }
-
-    <pre>
-aws iam update-assume-role-policy \
---role-name AmazonEKS_EBS_CSI_DriverRole \
---policy-document '{
-"Version": "2012-10-17",
-"Statement": [
-{
-"Effect": "Allow",
-"Principal": {
-"Federated": "arn:aws:iam::694963052082:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/eks-cluster-id"
-    },
-    "Action": "sts:AssumeRoleWithWebIdentity",
-    "Condition": {
-    "StringEquals": {
-    "oidc.eks.us-east-2.amazonaws.com/id/eks-cluster-id:sub":
-        "system:serviceaccount:kube-system:ebs-csi-controller-sa"
-        }
-        }
-        }
-        ]
-        }'
-
-    </pre>
         </pre>
         # Create an IAM policy for the EBS-CSI driver
         aws iam create-policy \
@@ -221,6 +197,30 @@ aws iam update-assume-role-policy \
         --approve \
         --region us-east-2
         </pre>
+
+        <pre>
+        aws iam update-assume-role-policy \
+        --role-name AmazonEKS_EBS_CSI_DriverRole \
+        --policy-document '{
+        "Version": "2012-10-17",
+        "Statement": [
+        {
+        "Effect": "Allow",
+        "Principal": {
+        "Federated": "arn:aws:iam::694963052082:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/eks-cluster-id"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+            "StringEquals": {
+            "oidc.eks.us-east-2.amazonaws.com/id/eks-cluster-id:sub":
+                "system:serviceaccount:kube-system:ebs-csi-controller-sa"
+                }
+                }
+                }
+                ]
+                }'
+        
+            </pre>
         <h3>Deploying EBS-CSI Driver</h3>
         <pre>
 # Add the EBS-CSI driver Helm repository
