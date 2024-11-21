@@ -147,6 +147,7 @@ kubectl port-forward -n monitoring deploy/prometheus-server 9090
         </p>
         <h3>Creating IAM Role for EBS-CSI Controller</h3>
         <pre>
+            <p> Create a new file with the name ebs-csi-policy.json with the following content:</p>
 <pre>
     {
     "Version": "2012-10-17",
@@ -193,7 +194,7 @@ kubectl port-forward -n monitoring deploy/prometheus-server 9090
         --name ebs-csi-controller-sa \
         --namespace kube-system \
         --cluster dev-dfd-tf \
-        --attach-role-arn arn:aws:iam::694963052082:role/AmazonEKS_EBS_CSI_DriverRole \
+        --attach-role-arn arn:aws:iam::ACCOUNT_ID:role/AmazonEKS_EBS_CSI_DriverRole \
         --approve \
         --region us-east-2
         </pre>
@@ -207,12 +208,12 @@ kubectl port-forward -n monitoring deploy/prometheus-server 9090
         {
         "Effect": "Allow",
         "Principal": {
-        "Federated": "arn:aws:iam::694963052082:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/eks-cluster-id"
+        "Federated": "arn:aws:iam::ACCOUNT_ID:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/CLUSTER_OIDC_ID"
             },
             "Action": "sts:AssumeRoleWithWebIdentity",
             "Condition": {
             "StringEquals": {
-            "oidc.eks.us-east-2.amazonaws.com/id/eks-cluster-id:sub":
+            "oidc.eks.us-east-2.amazonaws.com/id/CLUSTER_OIDC_ID:sub":
                 "system:serviceaccount:kube-system:ebs-csi-controller-sa"
                 }
                 }
