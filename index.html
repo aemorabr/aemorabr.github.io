@@ -154,13 +154,12 @@ aws iam create-policy \
 
 # Create an IAM role and attach the policy
 eksctl create iamserviceaccount \
-  --name ebs-csi-controller-sa \
-  --namespace kube-system \
-  --cluster <your-cluster-name> \
-  --attach-policy-arn arn:aws:iam::&lt;your-account-id&gt;:policy/AmazonEKS_EBS_CSI_Driver_Policy \
-  --approve \
-  --role-only \
-  --role-name AmazonEKS_EBS_CSI_DriverRole
+--name ebs-csi-controller-sa \
+--namespace kube-system \
+--cluster dev-dfd-tf \
+--attach-role-arn arn:aws:iam::694963052082:role/AmazonEKS_EBS_CSI_DriverRole \
+--approve \
+--region us-east-2
     </pre>
         <h3>Deploying EBS-CSI Driver</h3>
         <pre>
