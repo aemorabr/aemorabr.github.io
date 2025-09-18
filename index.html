@@ -1,610 +1,629 @@
-<!DOCTYPE html>
+html_content = '''<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intel Flex TFA Cloud Topic: Monitoring Tools for Kubernetes</title>
+    <title>Allan Mora Brenes - Senior Full-Stack Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-card: #ffffff;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
+            box-sizing: border-box;
         }
 
-        .slide {
-            display: none;
-            padding: 40px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            margin: 20px;
-            border-radius: 8px;
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-secondary);
         }
 
-        .slide.active {
-            display: block;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
-        .navigation {
+        /* Header */
+        header {
+            background: var(--bg-primary);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 6rem 0;
             text-align: center;
-            margin-top: 20px;
         }
 
-        .navigation button {
-            padding: 15px 30px;
-            margin: 0 10px;
-            font-size: 18px;
-            background-color: #0071c5;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
         }
 
-        .navigation button:hover {
-            background-color: #005a9e;
+        .hero .subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
         }
 
-        h1 {
-            font-size: 36px;
-            color: #0071c5;
+        .hero .location {
+            font-size: 1rem;
+            margin-bottom: 3rem;
+            opacity: 0.8;
         }
 
-        h2 {
-            font-size: 30px;
-            color: #0071c5;
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
-        h3 {
-            font-size: 26px;
-            color: #0071c5;
+        .btn {
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        p {
-            font-size: 20px;
+        .btn-primary {
+            background: white;
+            color: var(--primary-color);
         }
 
-        ul {
-            font-size: 20px;
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
 
-        pre {
-            background-color: #f4f4f4;
-            padding: 20px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            font-size: 18px;
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+
+        /* About Section */
+        .about {
+            background: var(--bg-primary);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: 0.75rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Experience Section */
+        .experience-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .experience-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .company {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .role {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .period {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            background: var(--bg-secondary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+        }
+
+        .achievements {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .achievements li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-secondary);
+        }
+
+        .achievements li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* Skills Section */
+        .skills {
+            background: var(--bg-primary);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+        }
+
+        .skill-category h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--bg-secondary);
+        }
+
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: var(--bg-card);
+            border-radius: 0.75rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            color: var(--primary-color);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-primary);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
         }
     </style>
 </head>
-
 <body>
+    <header>
+        <nav class="container">
+            <div class="logo">Allan Mora</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <div class="slide active" id="slide1">
-        <h1>Intel Flex TFA Cloud Topic</h1>
-        <h2>Monitoring Tools for Kubernetes</h2>
-        <p>Welcome to the sharing session on monitoring tools for Kubernetes, focusing on Grafana and Prometheus,
-            oriented towards AWS and Azure.</p>
-    </div>
+    <section class="hero">
+        <div class="container">
+            <h1 class="fade-in-up">Allan Mora Brenes</h1>
+            <p class="subtitle fade-in-up">Senior Full‑Stack Software Engineer</p>
+            <p class="location fade-in-up">Costa Rica • Remote Ready</p>
+            <div class="cta-buttons fade-in-up">
+                <a href="#contact" class="btn btn-primary">
+                    <i class="fas fa-envelope"></i>
+                    Get In Touch
+                </a>
+                <a href="https://www.linkedin.com/in/allan-mora-52243b110" class="btn btn-secondary" target="_blank">
+                    <i class="fab fa-linkedin"></i>
+                    LinkedIn
+                </a>
+            </div>
+        </div>
+    </section>
 
-    <div class="slide" id="slide2">
-        <h2>Introduction to Grafana and Prometheus</h2>
-        <p>Grafana and Prometheus are two powerful open-source tools that are often used together to monitor and
-            visualize the health and performance of Kubernetes clusters.</p>
-        <h3>Prometheus</h3>
-        <p>Prometheus is an open-source systems monitoring and alerting toolkit originally built at SoundCloud. It
-            records real-time metrics in a time series database built using an HTTP pull model, with flexible queries
-            and real-time alerting.</p>
-        <ul>
-            <li><strong>Data Collection:</strong> Prometheus scrapes metrics from instrumented jobs, either directly or
-                via intermediary push gateways.</li>
-            <li><strong>Storage:</strong> It stores all scraped samples locally and runs rules over this data to either
-                aggregate and record new time series from existing data or generate alerts.</li>
-            <li><strong>Querying:</strong> Prometheus provides a powerful query language called PromQL to query and
-                extract meaningful insights from the stored metrics.</li>
-        </ul>
-        <h3>Grafana</h3>
-        <p>Grafana is an open-source platform for monitoring and observability. It allows you to query, visualize, alert
-            on, and understand your metrics no matter where they are stored.</p>
-        <ul>
-            <li><strong>Visualization:</strong> Grafana provides a rich set of visualization options to create
-                dashboards that display metrics in a meaningful way.</li>
-            <li><strong>Data Sources:</strong> It supports multiple data sources, including Prometheus, allowing you to
-                combine data from different sources in a single dashboard.</li>
-            <li><strong>Alerting:</strong> Grafana can be configured to send alerts based on the metrics data, helping
-                you to proactively manage your infrastructure.</li>
-        </ul>
-        <h3>Relationship Between Grafana and Prometheus</h3>
-        <p>In a Kubernetes cluster, Prometheus acts as the data collection and storage backend, while Grafana serves as
-            the visualization and alerting frontend. Here's how they work together:</p>
-        <ul>
-            <li><strong>Data Collection:</strong> Prometheus scrapes metrics from various endpoints within the
-                Kubernetes cluster, such as node metrics, application metrics, and custom metrics.</li>
-            <li><strong>Data Storage:</strong> Prometheus stores these metrics in its time series database.</li>
-            <li><strong>Data Visualization:</strong> Grafana queries Prometheus for the stored metrics and visualizes
-                them in dashboards. This allows you to monitor the health and performance of your Kubernetes cluster in
-                real-time.</li>
-            <li><strong>Alerting:</strong> Both Prometheus and Grafana can be configured to send alerts based on the
-                metrics data. Prometheus handles the alerting rules and sends alerts to Alertmanager, while Grafana can
-                also be configured to send alerts based on the visualized data.</li>
-        </ul>
-    </div>
-    <div class="slide" id="slide3">
-        <h2>Deploying Prometheus on AWS</h2>
-        <pre>
-# Create a namespace for Prometheus
-kubectl create namespace monitoring
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-number">12+</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">1</div>
+                        <div class="stat-label">Patent Filed</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">50%</div>
+                        <div class="stat-label">Defect Reduction</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">10K+</div>
+                        <div class="stat-label">Users Served</div>
+                    </div>
+                </div>
+                <div class="about-text">
+                    <p>Dynamic Senior Full‑Stack Software Engineer with 12+ years of experience in .NET Core, React/Next.js, and cloud-native systems (Azure, AWS). Proven track record of architecting scalable web applications while integrating AI and ML pipelines as application features that drive user value.</p>
+                    
+                    <p>Skilled at balancing hands-on coding with architectural leadership, guiding teams to deliver secure, performant, and innovative solutions across enterprise and mission-critical domains. Currently pursuing a Master's in Artificial Intelligence to further enhance my technical capabilities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-# Deploy Prometheus using Helm
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-helm repo update
-helm install prometheus prometheus-community/prometheus --namespace monitoring
-kubectl port-forward -n monitoring deploy/prometheus-server 9090
-    </pre>
-        <p>Open your browser and navigate to <a href="http://localhost:9090" target="_blank">http://localhost:9090</a>
-        </p>
-        <h3>Creating IAM Role for EBS-CSI Controller</h3>
-        <pre>
-            <p> Create a new file with the name ebs-csi-policy.json with the following content:</p>
+    <section id="experience" class="experience">
+        <div class="container">
+            <h2 class="section-title">Experience</h2>
+            <div class="experience-grid">
+                <div class="experience-card fade-in-up">
+                    <div class="experience-header">
+                        <div>
+                            <div class="company">Intel Corporation</div>
+                            <div class="role">Senior System Software Development Engineer</div>
+                        </div>
+                        <div class="period">2022–Present</div>
+                    </div>
+                    <ul class="achievements">
+                        <li>Architected full‑stack solutions with Next.js, React, .NET Core APIs, and Azure services</li>
+                        <li>Designed Kubernetes + Helm deployments for scalable cloud apps</li>
+                        <li>Developed AI-powered features such as deepfake detection integrated into user-facing tools</li>
+                        <li>Filed and secured approval for Intel Development Forum (IDF) patent submission on AI compute algorithms</li>
+                    </ul>
+                </div>
 
-        <pre>
-    {
-    "Version": "2012-10-17",
-    "Statement": [
-    {
-    "Effect": "Allow",
-    "Action": [
-    "ec2:CreateSnapshot",
-    "ec2:AttachVolume",
-    "ec2:DetachVolume",
-    "ec2:ModifyVolume",
-    "ec2:DescribeAvailabilityZones",
-    "ec2:DescribeInstances",
-    "ec2:DescribeSnapshots",
-    "ec2:DescribeTags",
-    "ec2:DescribeVolumes",
-    "ec2:DescribeVolumesModifications",
-    "ec2:CreateTags",
-    "ec2:DeleteTags",
-    "ec2:CreateVolume",
-    "ec2:DeleteVolume"
-    ],
-    "Resource": "*"
-    },
-    {
-    "Effect": "Allow",
-    "Action": [
-    "ec2:DescribeVpcs",
-    "ec2:DescribeSubnets",
-    "ec2:DescribeSecurityGroups"
-    ],
-    "Resource": "*"
-    }
-    ]
-    }
-            </pre>
-        # Create an IAM policy for the EBS-CSI driver
-        aws iam create-policy \
-        --policy-name AmazonEKS_EBS_CSI_Driver_Policy \
-        --policy-document file://ebs-csi-policy.json
+                <div class="experience-card fade-in-up">
+                    <div class="experience-header">
+                        <div>
+                            <div class="company">Fiserv</div>
+                            <div class="role">Advisor I / Team Lead / Technical Lead</div>
+                        </div>
+                        <div class="period">2016–2022</div>
+                    </div>
+                    <ul class="achievements">
+                        <li>Delivered banking APIs and modern web front‑ends built with .NET Core, React, and RESTful designs</li>
+                        <li>Reduced defects by 50% across financial app deployments through observability, automated QA, and CI/CD pipelines</li>
+                        <li>Directed cross-functional teams, reviewed code, and mentored engineers in Agile/DevOps standards</li>
+                    </ul>
+                </div>
 
-        # Create an IAM role and attach the policy
-        eksctl create iamserviceaccount \
-        --name ebs-csi-controller-sa \
-        --namespace kube-system \
-        --cluster dev-dfd-tf \
-        --attach-role-arn arn:aws:iam::ACCOUNT_ID:role/AmazonEKS_EBS_CSI_DriverRole \
-        --approve \
-        --region us-east-2
-        </pre>
+                <div class="experience-card fade-in-up">
+                    <div class="experience-header">
+                        <div>
+                            <div class="company">BAC Credomatic</div>
+                            <div class="role">Software Engineer</div>
+                        </div>
+                        <div class="period">2012–2016</div>
+                    </div>
+                    <ul class="achievements">
+                        <li>Designed backend financial applications and SaaS systems</li>
+                        <li>Delivered transaction services enabling secure debit/credit operations via ISO 8583 standards</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <pre>
-        aws iam update-assume-role-policy \
-        --role-name AmazonEKS_EBS_CSI_DriverRole \
-        --policy-document '{
-        "Version": "2012-10-17",
-        "Statement": [
-        {
-        "Effect": "Allow",
-        "Principal": {
-        "Federated": "arn:aws:iam::ACCOUNT_ID:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/CLUSTER_OIDC_ID"
-            },
-            "Action": "sts:AssumeRoleWithWebIdentity",
-            "Condition": {
-            "StringEquals": {
-            "oidc.eks.us-east-2.amazonaws.com/id/CLUSTER_OIDC_ID:sub":
-                "system:serviceaccount:kube-system:ebs-csi-controller-sa"
-                }
-                }
-                }
-                ]
-                }'
-        
-            </pre>
-        <h3>Deploying EBS-CSI Driver</h3>
-        <pre>
-# Add the EBS-CSI driver Helm repository
-helm repo add aws-ebs-csi-driver https://kubernetes-sigs.github.io/aws-ebs-csi-driver
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2 class="section-title">Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category fade-in-up">
+                    <h3><i class="fas fa-code"></i> Frontend</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Next.js</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">TypeScript</span>
+                        <span class="skill-tag">HTML5</span>
+                        <span class="skill-tag">CSS3</span>
+                    </div>
+                </div>
 
-# Update the Helm repository
-helm repo update
+                <div class="skill-category fade-in-up">
+                    <h3><i class="fas fa-server"></i> Backend</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">.NET Core</span>
+                        <span class="skill-tag">C#</span>
+                        <span class="skill-tag">REST APIs</span>
+                        <span class="skill-tag">Microservices</span>
+                        <span class="skill-tag">SQL Server</span>
+                        <span class="skill-tag">Cosmos DB</span>
+                    </div>
+                </div>
 
-# Install the EBS-CSI driver
-helm install aws-ebs-csi-driver aws-ebs-csi-driver/aws-ebs-csi-driver \
-  --namespace kube-system \
-  --set controller.serviceAccount.create=false \
-  --set controller.serviceAccount.name=ebs-csi-controller-sa
-    </pre>
-        <h3>Setting AWS EBS as the StorageClass for Prometheus</h3>
-        <pre>
-# Create a StorageClass for EBS
-cat &lt;&lt;EOF | kubectl apply -f -
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: ebs-sc
-provisioner: ebs.csi.aws.com
-volumeBindingMode: WaitForFirstConsumer
-EOF
+                <div class="skill-category fade-in-up">
+                    <h3><i class="fas fa-cloud"></i> Cloud & DevOps</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Azure</span>
+                        <span class="skill-tag">AWS</span>
+                        <span class="skill-tag">Kubernetes</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">GitHub Actions</span>
+                        <span class="skill-tag">Azure DevOps</span>
+                    </div>
+                </div>
 
-# Create a PersistentVolumeClaim for Prometheus using the EBS StorageClass
-cat &lt;&lt;EOF | kubectl apply -f -
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: prometheus-pvc
-  namespace: monitoring
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: ebs-sc
-  resources:
-    requests:
-      storage: 5Gi
-EOF
+                <div class="skill-category fade-in-up">
+                    <h3><i class="fas fa-brain"></i> AI Integration</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">OpenVINO</span>
+                        <span class="skill-tag">DLStreamer</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Model Fine-tuning</span>
+                        <span class="skill-tag">Computer Vision</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-# Update the Prometheus Helm deployment to use the PersistentVolumeClaim
-helm upgrade prometheus prometheus-community/prometheus \
-  --namespace monitoring \
-  --set server.persistentVolume.existingClaim=prometheus-pvc
-</pre>
-    </div>
-    <div class="slide" id="slide4">
-        <h2>Deploying Grafana on AWS</h2>
-        <pre>
-# Create a namespace for Grafana
-kubectl create namespace grafana
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Let's Connect</h2>
+            <div class="contact-content">
+                <p>I'm always interested in discussing new opportunities, innovative projects, and collaborations. Feel free to reach out!</p>
+                <div class="contact-links">
+                    <a href="mailto:allanmb@me.com" class="contact-link">
+                        <i class="fas fa-envelope"></i>
+                        allanmb@me.com
+                    </a>
+                    <a href="tel:+50660599034" class="contact-link">
+                        <i class="fas fa-phone"></i>
+                        +506 6059 9034
+                    </a>
+                    <a href="https://www.linkedin.com/in/allan-mora-52243b110" class="contact-link" target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                        LinkedIn
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-# Deploy Grafana using Helm
-helm repo add grafana https://grafana.github.io/helm-charts
-helm repo update
-helm install grafana grafana/grafana --namespace grafana
-    </pre>
-        <p>Access Grafana:</p>
-        <pre>
-kubectl get secret --namespace grafana grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
-kubectl port-forward -n grafana service/grafana 3000:80
-    </pre>
-        <p>Open your browser and navigate to <a href="http://localhost:3000" target="_blank">http://localhost:3000</a>
-        </p>
-        <h3>Configuring Prometheus as a Data Source in Grafana</h3>
-        <p>To configure Prometheus as a data source in Grafana:</p>
-        <ol>
-            <li>Log in to Grafana using the admin credentials.</li>
-            <li>Navigate to <strong>Configuration</strong> &gt; <strong>Data Sources</strong>.</li>
-            <li>Click on <strong>Add data source</strong>.</li>
-            <li>Select <strong>Prometheus</strong> from the list of data sources.</li>
-            <li>In the <strong>HTTP</strong> section, set the URL to
-                <code>http://prometheus-server.monitoring.svc.cluster.local:80</code>.
-            </li>
-            <li>Click <strong>Save & Test</strong> to verify the connection.</li>
-        </ol>
-    </div>
-    <div class="slide" id="slide5">
-        <h2>Deploying Prometheus on Azure</h2>
-        <pre>
-# Create a namespace for Prometheus
-kubectl create namespace monitoring
-
-# Deploy Prometheus using Helm
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-helm repo update
-helm install prometheus prometheus-community/prometheus --namespace monitoring
-    </pre>
-        <p>Access Prometheus:</p>
-        <pre>
-kubectl port-forward -n monitoring deploy/prometheus-server 9090
-    </pre>
-        <p>Open your browser and navigate to <a href="http://localhost:9090" target="_blank">http://localhost:9090</a>
-        </p>
-        <h3>Creating Service Principal for Azure Disk CSI Driver</h3>
-        <pre>
-# Create a service principal
-az ad sp create-for-rbac --name <your-service-principal-name> --role Contributor --scopes /subscriptions/<your-subscription-id>
-
-# Note the appId, password, and tenant values from the output
-    </pre>
-        <h3>Deploying Azure Disk CSI Driver</h3>
-        <pre>
-# Add the Azure Disk CSI driver Helm repository
-helm repo add azuredisk-csi-driver https://raw.githubusercontent.com/kubernetes-sigs/azuredisk-csi-driver/master/charts
-
-# Update the Helm repository
-helm repo update
-# Install the Azure Disk CSI driver
-helm install azuredisk-csi-driver azuredisk-csi-driver/azuredisk-csi-driver --namespace kube-system
-</pre>
-        <h3>Setting Azure Disk as the Default Storage Class for Prometheus</h3>
-        <pre>
-        # Create a StorageClass for Azure Disk
-        cat &lt;&lt;EOF | kubectl apply -f -
-        apiVersion: storage.k8s.io/v1
-        kind: StorageClass
-        metadata:
-          name: azure-disk-sc
-        provisioner: disk.csi.azure.com
-        volumeBindingMode: WaitForFirstConsumer
-        EOF
-        
-        # Create a PersistentVolumeClaim for Prometheus using the Azure Disk StorageClass
-        cat &lt;&lt;EOF | kubectl apply -f -
-        apiVersion: v1
-        kind: PersistentVolumeClaim
-        metadata:
-          name: prometheus-pvc
-          namespace: monitoring
-        spec:
-          accessModes:
-            - ReadWriteOnce
-          storageClassName: azure-disk-sc
-          resources:
-            requests:
-              storage: 5Gi
-        EOF
-        
-        # Update the Prometheus Helm deployment to use the PersistentVolumeClaim
-        helm upgrade prometheus prometheus-community/prometheus \
-          --namespace monitoring \
-          --set server.persistentVolume.existingClaim=prometheus-pvc
-        </pre>
-    </div>
-
-    <div class="slide" id="slide6">
-        <h2>Deploying Grafana on Azure</h2>
-        <pre>
-# Create a namespace for Grafana
-kubectl create namespace grafana
-
-# Deploy Grafana using Helm
-helm repo add grafana https://grafana.github.io/helm-charts
-helm repo update
-helm install grafana grafana/grafana --namespace grafana
-    </pre>
-        <p>Access Grafana:</p>
-        <pre>
-kubectl get secret --namespace grafana grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
-kubectl port-forward -n grafana service/grafana 3000:80
-    </pre>
-        <p>Open your browser and navigate to <a href="http://localhost:3000" target="_blank">http://localhost:3000</a>
-        </p>
-        <h3>Configuring Prometheus as a Data Source in Grafana</h3>
-        <p>To configure Prometheus as a data source in Grafana:</p>
-        <ol>
-            <li>Log in to Grafana using the admin credentials.</li>
-            <li>Navigate to <strong>Configuration</strong> &gt; <strong>Data Sources</strong>.</li>
-            <li>Click on <strong>Add data source</strong>.</li>
-            <li>Select <strong>Prometheus</strong> from the list of data sources.</li>
-            <li>In the <strong>HTTP</strong> section, set the URL to
-                <code>http://prometheus-server.monitoring.svc.cluster.local:80</code>.
-            </li>
-            <li>Click <strong>Save & Test</strong> to verify the connection.</li>
-        </ol>
-    </div>
-
-    <div class="slide" id="slide7">
-        <h2>Demonstration: Using Prometheus and Grafana</h2>
-        <h3>1. Access Prometheus and Explore the Metrics Available</h3>
-        <p>To access Prometheus, use the following command to port-forward:</p>
-        <pre>
-kubectl port-forward -n monitoring deploy/prometheus-server 9090
-    </pre>
-        <p>Open your browser and navigate to <a href="http://localhost:9090" target="_blank">http://localhost:9090</a>.
-            Use the Prometheus UI to explore the available metrics.</p>
-
-        <h3>2. Access Grafana and Add Prometheus as a Data Source</h3>
-        <p>To access Grafana, use the following command to port-forward:</p>
-        <pre>
-kubectl port-forward -n grafana service/grafana 3000:80
-    </pre>
-        <p>Open your browser and navigate to <a href="http://localhost:3000" target="_blank">http://localhost:3000</a>.
-            Log in using the admin credentials.</p>
-        <p>To add Prometheus as a data source in Grafana:</p>
-        <ol>
-            <li>Navigate to <strong>Configuration</strong> &gt; <strong>Data Sources</strong>.</li>
-            <li>Click on <strong>Add data source</strong>.</li>
-            <li>Select <strong>Prometheus</strong> from the list of data sources.</li>
-            <li>In the <strong>HTTP</strong> section, set the URL to
-                <code>http://prometheus-server.monitoring.svc.cluster.local:80</code>.
-            </li>
-            <li>Click <strong>Save & Test</strong> to verify the connection.</li>
-        </ol>
-
-        <h3>3. Create a New Dashboard in Grafana and Add Panels to Visualize Metrics from Prometheus</h3>
-        <p>To create a new dashboard in Grafana:</p>
-        <ol>
-            <li>Navigate to <strong>Create</strong> &gt; <strong>Dashboard</strong>.</li>
-            <li>Click on <strong>Add new panel</strong>.</li>
-            <li>In the <strong>Query</strong> section, select <strong>Prometheus</strong> as the data source.</li>
-            <li>Enter a PromQL query to fetch the desired metrics (e.g., <code>up</code> to check the status of
-                targets).</li>
-            <li>Customize the visualization options as needed.</li>
-            <li>Click <strong>Apply</strong> to add the panel to the dashboard.</li>
-            <li>Repeat the steps to add more panels to the dashboard.</li>
-        </ol>
-
-        <h3>4. Set Up Alerts in Grafana Based on the Metrics from Prometheus</h3>
-        <p>To set up alerts in Grafana:</p>
-        <ol>
-            <li>Edit an existing panel or create a new one.</li>
-            <li>Navigate to the <strong>Alert</strong> tab.</li>
-            <li>Click on <strong>Create Alert</strong>.</li>
-            <li>Define the alert conditions based on the Prometheus metrics. For example, to alert if a target is down:
-            </li>
-            <pre>
-# Example PromQL query to check if a target is down
-up == 0
-        </pre>
-            <li>Set the evaluation interval and notification options. For example:
-                <ul>
-                    <li><strong>Evaluate every:</strong> 1m</li>
-                    <li><strong>For:</strong> 5m (to avoid false positives)</li>
-                </ul>
-            </li>
-            <li>Configure the alert message and notification channels. For example:
-                <ul>
-                    <li><strong>Alert Name:</strong> Target Down</li>
-                    <li><strong>Message:</strong> One or more targets are down.</li>
-                    <li><strong>Notification Channels:</strong> Email, Slack, etc.</li>
-                </ul>
-            </li>
-            <li>Click <strong>Save</strong> to apply the alert configuration.</li>
-        </ol>
-    </div>
-
-    <div class="slide" id="slide8">
-        <h2>Azure vs AWS: Monitoring Tools Deployment Differences</h2>
-        <h3>Storage Types</h3>
-        <p>Both Azure and AWS offer different storage solutions that can be used with Prometheus and Grafana:</p>
-        <ul>
-            <li><strong>AWS:</strong> Prometheus can use Amazon S3 for long-term storage. Grafana can also use Amazon
-                RDS or Amazon S3 for storing dashboards and other data.</li>
-            <li><strong>Azure:</strong> Prometheus can use Azure Blob Storage for long-term storage. Grafana can use
-                Azure SQL Database or Azure Blob Storage for storing dashboards and other data.</li>
-        </ul>
-        <h3>Permissions and Actions</h3>
-        <p>Setting up Prometheus and Grafana on AWS and Azure requires different permissions and actions:</p>
-        <ul>
-            <li><strong>AWS:</strong>
-                <ul>
-                    <li>Create an IAM role with permissions to access Amazon S3, Amazon RDS, and other necessary
-                        services.</li>
-                    <li>Ensure that the Kubernetes cluster has the necessary IAM roles and policies attached.</li>
-                    <li>Configure Prometheus to use the IAM role for accessing Amazon S3.</li>
-                </ul>
-            </li>
-            <li><strong>Azure:</strong>
-                <ul>
-                    <li>Create a service principal with permissions to access Azure Blob Storage, Azure SQL Database,
-                        and other necessary services.</li>
-                    <li>Ensure that the Kubernetes cluster has the necessary service principal credentials.</li>
-                    <li>Configure Prometheus to use the service principal for accessing Azure Blob Storage.</li>
-                </ul>
-            </li>
-        </ul>
-        <h3>Additional Considerations</h3>
-        <p>When deploying Prometheus and Grafana on AWS and Azure, consider the following:</p>
-        <ul>
-            <li><strong>Networking:</strong> Ensure that your Kubernetes cluster can access the necessary storage
-                services (Amazon S3, Azure Blob Storage) over the network.</li>
-            <li><strong>Security:</strong> Use encryption for data at rest and in transit. Configure security groups and
-                network security rules to restrict access to Prometheus and Grafana.</li>
-            <li><strong>Scalability:</strong> Use managed services like Amazon RDS or Azure SQL Database to handle the
-                scalability and availability of your Grafana data store.</li>
-        </ul>
-    </div>
-    <div class="slide" id="slide9">
-        <h2>Other Open-Source Monitoring Tools</h2>
-        <h3>1. ELK Stack (Elasticsearch, Logstash, Kibana)</h3>
-        <p>The ELK Stack is a powerful set of tools for searching, analyzing, and visualizing log data in real time.
-            Elasticsearch is a search and analytics engine, Logstash is a server-side data processing pipeline, and
-            Kibana is a visualization tool.</p>
-        <pre>
-# Deploying ELK Stack using Helm
-helm repo add elastic https://helm.elastic.co
-helm repo update
-helm install elasticsearch elastic/elasticsearch
-helm install logstash elastic/logstash
-helm install kibana elastic/kibana
-    </pre>
-
-        <h3>2. Fluentd</h3>
-        <p>Fluentd is an open-source data collector for unified logging layers. It allows you to collect logs from
-            various sources, unify them, and route them to different destinations.</p>
-        <pre>
-# Deploying Fluentd using Helm
-helm repo add fluent https://fluent.github.io/helm-charts
-helm repo update
-helm install fluentd fluent/fluentd
-    </pre>
-
-        <h3>3. Zabbix</h3>
-        <p>Zabbix is an enterprise-class open-source distributed monitoring solution for networks and applications.</p>
-        <pre>
-# Deploying Zabbix using Helm
-helm repo add cetic https://cetic.github.io/helm-charts
-helm repo update
-helm install zabbix cetic/zabbix
-    </pre>
-    </div>
-    <div class="slide" id="slide10">
-        <h2>Conclusion</h2>
-        <p>In this session, we covered the following key points:</p>
-        <ul>
-            <li>The basics of deploying and using Prometheus and Grafana for monitoring Kubernetes clusters on AWS and
-                Azure.</li>
-            <li>How to configure data storage for Prometheus using AWS EBS and Azure Disk.</li>
-            <li>Steps to set up Prometheus as a data source in Grafana and create dashboards to visualize metrics.</li>
-            <li>How to set up alerts in Grafana based on Prometheus metrics to proactively manage your infrastructure.
-            </li>
-            <li>An overview of other popular open-source monitoring tools like the ELK Stack, Fluentd, and Zabbix.</li>
-        </ul>
-        <p>By leveraging these tools, you can effectively monitor and maintain the health and performance of your
-            Kubernetes
-            clusters, ensuring high availability and reliability of your applications.</p>
-        <p>Thank you for attending this session. I hope you found it informative and useful. If you have any
-            questions or need further assistance, please feel free to reach out.</p>
-    </div>
-
-    <div class="navigation">
-        <button onclick="prevSlide()">Previous</button>
-        <button onclick="nextSlide()">Next</button>
-    </div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Allan Mora Brenes. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script>
-        let currentSlide = 1;
-        const totalSlides = 10;
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
 
-        function showSlide(slideIndex) {
-            const slides = document.querySelectorAll('.slide');
-            slides.forEach((slide, index) => {
-                slide.classList.remove('active');
-                if (index === slideIndex - 1) {
-                    slide.classList.add('active');
+        // Add fade-in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
                 }
             });
-            window.scrollTo(0, 0); // Scroll to the top of the page
+        }, observerOptions);
 
-        }
-
-        function nextSlide() {
-            if (currentSlide < totalSlides) {
-                currentSlide++;
-                showSlide(currentSlide);
-            }
-        }
-
-        function prevSlide() {
-            if (currentSlide > 1) {
-                currentSlide--;
-                showSlide(currentSlide);
-            }
-        }
-
-        showSlide(currentSlide);
+        document.querySelectorAll('.experience-card, .skill-category').forEach(el => {
+            observer.observe(el);
+        });
     </script>
-
 </body>
-
 </html>
